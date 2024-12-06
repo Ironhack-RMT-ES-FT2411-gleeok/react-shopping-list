@@ -10,7 +10,9 @@ import testProducts from "../data/testProducts.json";
 function ShoppingPage() {
 
   const [ allProducts, setAllProducts ] = useState(testProducts) 
-  //* initial state. change to empty array when finished with add functionality
+  //* El estado se queda en ShoppingList porque todos loos componentes hijos de ShoppingList lo necesitan
+
+  const [ searchValue, setSearchValue ] = useState("")
 
   return (
     <>
@@ -18,16 +20,12 @@ function ShoppingPage() {
       <h1>Shopping List!</h1>
 
       {/* //* all elements of the shopping list will be here */}
-      {allProducts.map((eachProduct, index) => {
-        return (
-          <div className="product-card" key={index}>
-            <h3>{eachProduct.name}</h3>
-            <p>{eachProduct.price}€</p>
-            <p>{eachProduct.isPurchased === true ? "✅" : "🟡"}</p>
-            <button>Buy</button>
-          </div>
-        )
-      })}
+
+      <AddForm setAllProducts={setAllProducts}/>
+
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
+      
+      <ProductList allProducts={allProducts} searchValue={searchValue} setAllProducts={setAllProducts}/>
 
     </>
   )
